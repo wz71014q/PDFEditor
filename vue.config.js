@@ -7,10 +7,11 @@ module.exports = {
   css: {
     loaderOptions: {
       scss: {
-        // prependData: '@import "@/style/mixin.scss";'
+        prependData: '@import "@/styles/reset.scss";'
       }
     }
   },
+  productionSourceMap: false,
   chainWebpack: config => {
     config
       .plugin('StyleLintPlugin')
