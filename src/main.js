@@ -5,6 +5,7 @@ import store from './store'
 import '@/utils/rem'
 import row from '@/components/row'
 import col from '@/components/col'
+import '@/styles/reset.scss'
 
 Vue.config.productionTip = false
 Vue.use(row)

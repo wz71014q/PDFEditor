@@ -1,7 +1,11 @@
 <template>
   <div class="home-root">
-    <ul>
-      <li v-for="(item, index) in myRoutes" :key="index">
+    <ul class="pages-wrapper">
+      <li
+        class="pages"
+        v-for="(item, index) in myRoutes"
+        :key="index"
+        @click="onRouterChange(item)">
         {{ item.name }}
       </li>
     </ul>
@@ -18,8 +22,12 @@ export default {
       myRoutes: routes
     }
   },
-  mounted () {
-    console.log(routes, this.$router.options.routes)
+  methods: {
+    onRouterChange (page) {
+      if (page.name !== 'Home') {
+        this.$router.push({ name: page.name })
+      }
+    }
   }
 }
 </script>
@@ -28,5 +36,14 @@ export default {
 .home-root {
   width: 100%;
   height: 100%;
+}
+.pages-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.pages {
+  margin: auto;
+  cursor: pointer;
 }
 </style>
