@@ -3,3 +3,9 @@
     <router-view />
   </div>
 </template>
+
+<style lang="scss" scoped>
+#app {
+  font-size: 20px;
+}
+</style>
