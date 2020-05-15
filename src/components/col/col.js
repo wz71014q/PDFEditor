@@ -32,7 +32,6 @@ export default {
   render (h) {
     const classList = []
     const style = {}
-
     if (this.gutter) {
       style.paddingLeft = `${this.gutter / 2}px`
       style.paddingRight = style.paddingLeft
@@ -62,7 +61,7 @@ export default {
         })
       }
     })
-
+    console.log(style, this.$slots)
     return h(this.tag, {
       class: ['el-col', classList],
       style

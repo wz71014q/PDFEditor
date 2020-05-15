@@ -14,74 +14,7 @@
         <div class="grid-content bg-purple-light"></div>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="24">
-        <div class="grid-content bg-purple-dark"></div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="12">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="12">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="8">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="4">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-    </el-row>
     <el-row :gutter="20">
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
       <el-col :span="6">
         <div class="grid-content bg-purple"></div>
       </el-col>
@@ -103,6 +36,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import "@/styles/row.scss";
+@import url("//unpkg.com/element-ui@2.13.1/lib/theme-chalk/index.css");
 .layout-root {
   font-size: 20px;
 }
