@@ -21,6 +21,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "net" */ '../views/net')
   },
   {
+    path: '/drag',
+    name: 'Drag',
+    component: () => import(/* webpackChunkName: "drag" */ '../views/drag')
+  },
+  {
     path: '/grid',
     name: 'Grid',
     component: () => import(/* webpackChunkName: "grid" */ '../views/grid')
