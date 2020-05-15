@@ -25,9 +25,7 @@ export default {
         startX: 0,
         startY: 0,
         myOffsetLeft: 0,
-        myOffsetTop: 0,
-        clickPositionX: 0,
-        clickPositionY: 0
+        myOffsetTop: 0
       },
       draggerStyle: {
         top: 0,
@@ -47,16 +45,14 @@ export default {
       this.elePosition.startY = _event.clientY
       this.elePosition.width = _event.target.offsetWidth
       this.elePosition.height = _event.target.offsetHeight
-      this.elePosition.clickPositionX = _event.clientX - _event.target.offsetLeft
-      this.elePosition.clickPositionY = _event.clientY - _event.target.offsetTop
       document.addEventListener('mousemove', this.move)
       document.addEventListener('mouseup', this.clear)
       document.addEventListener('mousecancel', this.clear)
     },
     move (event) {
       const _event = event || window.event
-      const diffX = _event.clientX - this.elePosition.startX // 点击位置与div左边距的差
-      const diffY = _event.clientY - this.elePosition.startY // 点击位置与div上边距的差
+      const diffX = _event.clientX - this.elePosition.startX // 移动距离
+      const diffY = _event.clientY - this.elePosition.startY
       let finnalX = diffX + this.elePosition.myOffsetLeft
       let finnalY = diffY + this.elePosition.myOffsetTop
       if (finnalX <= 0) {
