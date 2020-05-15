@@ -31,12 +31,25 @@ export default {
         top: 0,
         left: 0
       },
+      fraction: {
+        fractionX: 0,
+        fractionY: 0
+      },
       mapping: []
     }
   },
   mounted () {
+    this.getGrid()
   },
   methods: {
+    getGrid () {
+      this.fraction.fractionX = this.docWidth / 24
+      this.fraction.fractionY = this.docHeight / 24
+      for (let i = 0; i <= 24; i++) {
+        this.mapping.push([this.fraction.fractionX * i, this.fraction.fractionY * i])
+      }
+      console.log('getGrid', this.docWidth, this.docHeight, this.fraction, this.mapping)
+    },
     drag (event) {
       const _event = event || window.event
       this.elePosition.myOffsetLeft = _event.target.offsetLeft
@@ -70,7 +83,13 @@ export default {
       this.draggerStyle.left = finnalX
       this.draggerStyle.top = finnalY
     },
+    getDragPosition (posX, posY) {
+      const posXIndex = Math.floor(posX / this.fraction.fractionX)
+      const posYIndex = Math.floor(posY / this.fraction.fractionY)
+      console.log(posXIndex, posYIndex)
+    },
     clear () {
+      this.getDragPosition(this.draggerStyle.left, this.draggerStyle.top)
       document.removeEventListener('mousemove', this.move)
       document.removeEventListener('mouseup', this.clear)
     }
