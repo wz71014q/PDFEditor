@@ -29,6 +29,11 @@ const routes = [
     path: '/grid',
     name: 'Grid',
     component: () => import(/* webpackChunkName: "grid" */ '../views/grid')
+  },
+  {
+    path: '/pdfGenerate',
+    name: 'PdfGenerate',
+    component: () => import(/* webpackChunkName: "pdfGenerate" */ '../views/pdfGenerate')
   }
 ]
 

@@ -27,7 +27,7 @@ import JsPDF from 'jspdf'
 import html2pdf from 'html2pdf.js'
 
 export default {
-  name: 'Grid',
+  name: 'PdfGenerate',
   data () {
     return {
       msg: 'root'
