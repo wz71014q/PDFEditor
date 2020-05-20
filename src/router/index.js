@@ -34,6 +34,11 @@ const routes = [
     path: '/pdfGenerate',
     name: 'PdfGenerate',
     component: () => import(/* webpackChunkName: "pdfGenerate" */ '../views/pdfGenerate')
+  },
+  {
+    path: '/Canvas',
+    name: 'canvas',
+    component: () => import(/* webpackChunkName: "canvas" */ '../views/canvas')
   }
 ]
 
