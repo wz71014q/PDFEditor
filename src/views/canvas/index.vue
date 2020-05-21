@@ -7,13 +7,14 @@ export default {
   name: 'Layout',
   data () {
     return {
+      copies: 24,
       docWidth: document.documentElement.clientWidth || document.body.clientWidth,
       docHeight: document.documentElement.clientHeight || document.body.clientHeight,
       fraction: {
         fractionX: 0,
         fractionY: 0
       },
-      mapping: []
+      coordinate: []
     }
   },
   mounted () {
@@ -24,24 +25,24 @@ export default {
       const designerGrids = this.$refs.designerGrids
       designerGrids.width = this.docWidth
       designerGrids.height = this.docHeight
-      this.fraction.fractionX = parseFloat(Math.round(designerGrids.width / 24))
-      this.fraction.fractionY = parseFloat(Math.round(designerGrids.height / 24))
+      this.fraction.fractionX = parseFloat(Math.round(designerGrids.width / this.copies))
+      this.fraction.fractionY = parseFloat(Math.round(designerGrids.height / this.copies))
       if (this.fraction.fractionX - this.fraction.fractionY !== 0) {
         this.fraction.fractionX = Math.min(this.fraction.fractionX, this.fraction.fractionY)
         this.fraction.fractionY = Math.min(this.fraction.fractionX, this.fraction.fractionY)
       }
-      for (let i = 0; i <= 24; i++) {
-        this.mapping.push([this.fraction.fractionX * i, this.fraction.fractionY * i])
+      for (let i = 0; i <= this.copies; i++) {
+        this.coordinate.push([this.fraction.fractionX * i, this.fraction.fractionY * i])
       }
-      const arrayLenth = this.mapping.length
+      const arrayLenth = this.coordinate.length
       if (designerGrids.getContext) {
         const ctx = designerGrids.getContext('2d')
         ctx.beginPath()
-        this.mapping.forEach((item, index) => {
+        this.coordinate.forEach((item, index) => {
           ctx.moveTo(item[0] + 0.5, 0)
-          ctx.lineTo(item[0] + 0.5, this.mapping[arrayLenth - 1][1])
+          ctx.lineTo(item[0] + 0.5, this.coordinate[arrayLenth - 1][1])
           ctx.moveTo(0, item[1] + 0.5)
-          ctx.lineTo(this.mapping[arrayLenth - 1][0], item[1] + 0.5)
+          ctx.lineTo(this.coordinate[arrayLenth - 1][0], item[1] + 0.5)
         })
         ctx.lineWidth = 1
         ctx.strokeStyle = '#ccc'
@@ -54,7 +55,8 @@ export default {
 
 <style lang="scss" scoped>
 .layout-root {
-  // width: 100%;
-  // height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 </style>

@@ -9,21 +9,26 @@
       </div>
     </div>
     <Net />
+    <Layout />
   </div>
 </template>
 
 <script>
 import Net from '@/components/Net'
+import Layout from '@/components/Layout'
 
 export default {
   name: 'Drag',
   components: {
-    Net
+    Net,
+    Layout
   },
   data () {
     return {
       docWidth: document.documentElement.clientWidth || document.body.clientWidth,
       docHeight: document.documentElement.clientHeight || document.body.clientHeight,
+      // viewWith: 800,
+      // viewHeight: 600,
       elePosition: {
         width: 0,
         height: 0,
@@ -40,7 +45,7 @@ export default {
         fractionX: 0,
         fractionY: 0
       },
-      mapping: []
+      copies: 24
     }
   },
   mounted () {
@@ -48,12 +53,8 @@ export default {
   },
   methods: {
     getGrid () {
-      this.fraction.fractionX = this.docWidth / 24
-      this.fraction.fractionY = this.docHeight / 24
-      for (let i = 0; i <= 24; i++) {
-        this.mapping.push([this.fraction.fractionX * i, this.fraction.fractionY * i])
-      }
-      console.log('getGrid', this.docWidth, this.docHeight, this.fraction, this.mapping)
+      this.fraction.fractionX = parseFloat(Math.round(this.docWidth / this.copies))
+      this.fraction.fractionY = parseFloat(Math.round(this.docHeight / this.copies))
     },
     drag (event) {
       const _event = event || window.event
