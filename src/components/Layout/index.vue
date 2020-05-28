@@ -1,6 +1,7 @@
 <template>
   <div class="layout-root">
     <canvas ref="designerGrids" class="net-canvas" :class="{ hide: !baseConfig.showNet }"></canvas>
+    <canvas ref="guides" class="guides-canvas"></canvas>
   </div>
 </template>
 
@@ -9,16 +10,17 @@ import { GUI } from 'dat.gui'
 
 export default {
   name: 'Layout',
-  // props: {
-  //   showNet: {
-  //     type: Boolean,
-  //     default () {
-  //       return true
-  //     }
-  //   }
-  // },
+  props: {
+    dataSource: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
+  },
   data () {
     return {
+      cnvasContext: '',
       docWidth: document.documentElement.clientWidth || document.body.clientWidth,
       docHeight: document.documentElement.clientHeight || document.body.clientHeight,
       baseConfig: {
@@ -32,9 +34,20 @@ export default {
       coordinate: []
     }
   },
+  watch: {
+    baseConfig: {
+      handler: (newVal) => {
+        if (newVal.showNet) {
+          console.log(newVal)
+        }
+      },
+      deep: true
+    }
+  },
   mounted () {
+    this.initGrid()
     this.initGui()
-    this.draw()
+    this.initGuides()
   },
   methods: {
     initGui () {
@@ -43,7 +56,33 @@ export default {
       group.add(this.baseConfig, 'showNet').name('显示网格')
       group.open()
     },
-    draw () {
+    initCnvas () {
+      const designerGrids = this.$refs.designerGrids
+      designerGrids.width = this.docWidth
+      designerGrids.height = this.docHeight
+      let ctx = ''
+      if (designerGrids.getContext) {
+        ctx = designerGrids.getContext('2d')
+      } else {
+        alert('您的浏览器不支持canvas')
+      }
+      return ctx
+    },
+    initGuides (context) {
+      const guides = this.$refs.guides
+      guides.width = this.docWidth
+      guides.height = this.docHeight
+      if (guides.getContext) {
+        const ctx = guides.getContext('2d')
+        ctx.beginPath()
+        ctx.moveTo(50 + 0.5, 0)
+        ctx.lineTo(50 + 0.5, 500.5)
+        ctx.lineWidth = 1
+        ctx.strokeStyle = '#ff0000'
+        ctx.stroke()
+      }
+    },
+    initGrid () {
       const designerGrids = this.$refs.designerGrids
       designerGrids.width = this.docWidth
       designerGrids.height = this.docHeight
@@ -60,6 +99,7 @@ export default {
       const arrayLenth = this.coordinate.length
       if (designerGrids.getContext) {
         const ctx = designerGrids.getContext('2d')
+        this.cnvasContext = ctx
         ctx.beginPath()
         this.coordinate.forEach((item, index) => {
           ctx.moveTo(item[0] + 0.5, 0)
@@ -84,6 +124,11 @@ export default {
   z-index: -1;
   width: 100%;
   height: 100%;
+}
+.guides-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .hide {
   visibility: hidden;
