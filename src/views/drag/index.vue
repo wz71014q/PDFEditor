@@ -6,10 +6,12 @@
         class="center"
         @mousedown.stop.self="drag"
         :style="`top: ${draggerStyle.top}px; left: ${draggerStyle.left}px`">
+        当前所属区域：
+        ({{ location.locationX }}, {{ location.locationY }})
       </div>
     </div>
     <Net />
-    <Layout />
+    <Layout :location="draggerStyle" @adsorption.once="adsorption" />
   </div>
 </template>
 
@@ -44,6 +46,10 @@ export default {
       fraction: {
         fractionX: 0,
         fractionY: 0
+      },
+      location: { // 方框所属ID
+        locationX: 0,
+        locationY: 0
       },
       copies: 24
     }
@@ -88,16 +94,26 @@ export default {
       }
       this.draggerStyle.left = finnalX
       this.draggerStyle.top = finnalY
+      this.getDragPosition(finnalX, finnalY)
     },
     getDragPosition (posX, posY) {
       const posXIndex = Math.floor(posX / this.fraction.fractionX)
       const posYIndex = Math.floor(posY / this.fraction.fractionY)
-      console.log(`span ID: ${posXIndex + 1}, ${posYIndex + 1}`)
+      this.location = {
+        locationX: posXIndex + 1,
+        locationY: posYIndex + 1
+      }
     },
     clear () {
-      this.getDragPosition(this.draggerStyle.left, this.draggerStyle.top)
       document.removeEventListener('mousemove', this.move)
       document.removeEventListener('mouseup', this.clear)
+    },
+    adsorption (val) {
+      if (val) {
+        console.log(val)
+        this.draggerStyle.left = val[0]
+        this.draggerStyle.top = val[1]
+      }
     }
   }
 }
@@ -116,7 +132,10 @@ export default {
   position: absolute;
   width: 50px;
   height: 50px;
+  font-size: 12px;
+  white-space: pre-line;
   background-color: aquamarine;
   cursor: move;
+  user-select: none;
 }
 </style>

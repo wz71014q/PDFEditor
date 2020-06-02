@@ -11,7 +11,7 @@ import { GUI } from 'dat.gui'
 export default {
   name: 'Layout',
   props: {
-    dataSource: {
+    location: {
       type: Object,
       default () {
         return {}
@@ -42,12 +42,17 @@ export default {
         }
       },
       deep: true
+    },
+    location: {
+      handler: function locationHandler (newVal) {
+        this.initGuides(newVal)
+      },
+      deep: true
     }
   },
   mounted () {
     this.initGrid()
     this.initGui()
-    this.initGuides()
   },
   methods: {
     initGui () {
@@ -56,27 +61,30 @@ export default {
       group.add(this.baseConfig, 'showNet').name('显示网格')
       group.open()
     },
-    initCnvas () {
-      const designerGrids = this.$refs.designerGrids
-      designerGrids.width = this.docWidth
-      designerGrids.height = this.docHeight
-      let ctx = ''
-      if (designerGrids.getContext) {
-        ctx = designerGrids.getContext('2d')
-      } else {
-        alert('您的浏览器不支持canvas')
-      }
-      return ctx
-    },
-    initGuides (context) {
+    initGuides (loc) {
       const guides = this.$refs.guides
       guides.width = this.docWidth
       guides.height = this.docHeight
+      let startX = 0
+      let startY = 0
+      for (let i = 0; i < this.coordinate.length; i++) {
+        if (loc.left >= this.coordinate[i][0] - 5 && loc.left <= this.coordinate[i][0] + 5) {
+          startX = this.coordinate[i][0]
+        }
+        if (loc.top >= this.coordinate[i][1] - 5 && loc.top <= this.coordinate[i][1] + 5) {
+          startY = this.coordinate[i][1]
+        }
+      }
+      if (startX && startY) {
+        this.$emit('adsorption', [startX, startY])
+      }
       if (guides.getContext) {
         const ctx = guides.getContext('2d')
         ctx.beginPath()
-        ctx.moveTo(50 + 0.5, 0)
-        ctx.lineTo(50 + 0.5, 500.5)
+        ctx.moveTo(startX + 0.5, 0)
+        ctx.lineTo(startX + 0.5, guides.height)
+        ctx.moveTo(0, startY + 0.5, 0)
+        ctx.lineTo(guides.width, startY + 0.5)
         ctx.lineWidth = 1
         ctx.strokeStyle = '#ff0000'
         ctx.stroke()
